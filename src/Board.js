@@ -198,7 +198,18 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var board = this.rows();
+      var size = this.get('n');
+      var coordinateSums = [];
+      for (var i = 0; i < size; i++) {
+        for (var j = 0; j < size; j++) {
+          if (board[i][j] === 1) {
+            coordinateSums.push(i + j);
+          }
+        }
+      }
+      var set = new Set(coordinateSums);
+      return (!(set.size() === coordinateSums.length));   
     },
 
     // test if any minor diagonals on this board contain conflicts

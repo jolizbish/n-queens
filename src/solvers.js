@@ -50,16 +50,39 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var factorial = function(n) {
-    if (n === 0) { 
-      return 1; 
-    } else { 
-      return n * factorial(n - 1);
+  // var factorial = function(n) {
+  //   if (n === 0) { 
+  //     return 1; 
+  //   } else { 
+  //     return n * factorial(n - 1);
+  //   }
+  // };
+
+  // var solutionCount = factorial(n); //fixme
+  
+  var solutionCount = 0;
+  
+  var board = new Board({n: n});
+  
+  var findSolution = function(row) {
+    //base case
+    if (row === n) {
+      solutionCount++;
+      return;
     }
+    //recursive case
+    for (var i = 0; i < n; i++) {
+      board.togglePiece(row, i);
+      if (!board.hasAnyRooksConflicts()) {
+        findSolution(row + 1);
+        
+      }
+      board.togglePiece(row, i);
+    }
+    
   };
 
-  var solutionCount = factorial(n); //fixme
-
+  findSolution(0);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
@@ -130,9 +153,84 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  // var board = new Board({n: n});
+  // if (n === 0 || n === 1) {
+  //   return 1;
+  // }
+  // var solutionCount = 0;
 
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+  // // console.log('board: ', board);
+  // var func = function(n, board, rowIndex = 0) {
+  //   if (rowIndex > n) {
+  //     return;
+  //   }
+  //   if (rowIndex === n) {
+  //     solutionCount++;
+  //     // debugger;
+  //   }
+  
+  //   for (var i = 0; i < n; i++) {
+  //     board.togglePiece(rowIndex, i);
+  //     if (!(board.hasAnyQueensConflicts())) {
+  //       // if (board.get(rowIndex + 1)) {
+  //         // console.log('check :', board.get(rowIndex + 1));
+  //         func(n, board, rowIndex + 1);
+  //       // }
+  //     }
+  //     board.togglePiece(rowIndex, i);
+  //   }
+  // };
+  
+  // func(n, board, 0);
+  // console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+  
+  var solutionCount = 0;
+  
+  var board = new Board({n: n});
+  
+  var findSolution = function(row) {
+    //base case
+    if (row === n) {
+      solutionCount++;
+      return;
+    }
+    //recursive case
+    for (var i = 0; i < n; i++) {
+      board.togglePiece(row, i);
+      if (!board.hasAnyQueensConflicts()) {
+        findSolution(row + 1);
+        
+      }
+      board.togglePiece(row, i);
+    }
+    
+  };
+
+  findSolution(0);
+  
   return solutionCount;
 };
 // console.log('Test test', JSON.stringify(findNQueensSolution(10)));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
